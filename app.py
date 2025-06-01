@@ -2,11 +2,20 @@ import streamlit as st
 import pickle
 import string 
 from nltk.corpus import stopwords
-import nltk 
 from nltk.stem.porter import PorterStemmer
 
-nltk.download('punkt')
-nltk.download('stopwords')
+import nltk
+
+# Safe download only if not already present
+try:
+    nltk.data.find("tokenizers/punkt")
+except LookupError:
+    nltk.download("punkt")
+
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords")
 
 ps = PorterStemmer()
 
