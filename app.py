@@ -16,7 +16,7 @@ nltk.data.path.append(nltk_data_path)
 try:
     nltk.data.find("tokenizers/punkt")
 except LookupError:
-    nltk.download("punkt", download_dir=nltk_data_path)
+    nltk.download("punkt_tab", download_dir=nltk_data_path)
     
 try:
     nltk.data.find("corpora/stopwords")
