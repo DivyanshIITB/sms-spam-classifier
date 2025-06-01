@@ -3,10 +3,9 @@ import pickle
 import string 
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-
 import nltk
 
-# Safe download only if not already present
+# Download required NLTK resources safely
 try:
     nltk.data.find("tokenizers/punkt")
 except LookupError:
@@ -17,6 +16,7 @@ try:
 except LookupError:
     nltk.download("stopwords")
 
+# Initialize stemmer
 ps = PorterStemmer()
 
 def transform_text(text):
@@ -43,11 +43,17 @@ def transform_text(text):
 
     return " ".join(y)
 
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-model = pickle.load(open('model.pkl','rb'))
+# Load model and vectorizer
+try:
+    tfidf = pickle.load(open('vectorizer.pkl','rb'))
+    model = pickle.load(open('model.pkl','rb'))
+except FileNotFoundError:
+    st.error("Model or vectorizer file not found. Please make sure 'vectorizer.pkl' and 'model.pkl' are in the same directory.")
+    st.stop()
 
+# UI
 st.title("Email/SMS Spam Classifier")
- 
+
 input_sms = st.text_area("Enter the message")
 
 if st.button('Predict'):
